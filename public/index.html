@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mobile home - Calendrier des Disponibilités</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="main-header">
+        <div class="header-left">
+            <h1 class="logo-title" id="logo-title">mobile home</h1>
+        </div>
+        <div class="header-right">
+            <button id="theme-toggle" class="btn-icon" aria-label="Changer de thème">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <div id="auth-controls">
+                <button id="btn-login-open" class="btn btn-secondary">
+                    <i class="fa-solid fa-user-lock"></i> Connexion
+                </button>
+                <div id="user-logged-in" class="user-badge-container hidden">
+                    <span class="user-badge">
+                        <i class="fa-solid fa-circle-user"></i> <span id="username-display">Admin</span>
+                    </span>
+                    <button id="btn-logout" class="btn btn-sm btn-outline-danger">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="app-container">
+        <div class="calendar-card">
+
+            <!-- Admin Operations Bar -->
+            <div id="admin-actions-bar" class="admin-bar hidden">
+                <span class="badge badge-admin"><i class="fa-solid fa-shield-halved"></i> Mode Administrateur</span>
+                <div class="admin-bar-buttons">
+                    <button id="btn-config-months" class="btn btn-sm btn-secondary">
+                        <i class="fa-solid fa-sliders"></i> Paramétrer les mois
+                    </button>
+                    <button id="btn-edit-mode-toggle" class="btn btn-sm btn-primary">
+                        <i class="fa-solid fa-edit"></i> Activer l'édition
+                    </button>
+                </div>
+            </div>
+
+            <!-- Month Range Badge -->
+            <div class="month-span-header">
+                <span class="calendar-range-badge">
+                    <i class="fa-solid fa-calendar-days"></i> Période affichée : <strong id="calendar-range-text">Juin - Novembre 2026</strong>
+                </span>
+            </div>
+
+            <!-- Calendar Grid -->
+            <div id="calendars-grid" class="calendars-grid-container">
+                <div class="calendar-loading">
+                    <i class="fa-solid fa-circle-notch fa-spin"></i> Chargement du calendrier...
+                </div>
+            </div>
+
+            <!-- Legend + Action Button -->
+            <div class="calendar-footer">
+                <div class="legend-container">
+                    <div class="legend-item">
+                        <span class="legend-color color-available"></span>
+                        <span class="legend-text">Disponible</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color color-unavailable"></span>
+                        <span class="legend-text">Indisponible</span>
+                    </div>
+                </div>
+                <div class="bottom-action-container">
+                    <button id="btn-modify-availabilities" class="btn btn-primary btn-large btn-success">
+                        <i class="fa-solid fa-square-check"></i> MODIFIER LES DISPONIBILITÉS
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <p>&copy; 2026 <strong>mobile home</strong>. Tous droits réservés.</p>
+    </footer>
+
+    <!-- MODAL: LOGIN -->
+    <div id="modal-login" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-lock-open"></i> Espace Administrateur</h2>
+                <button class="modal-close btn-icon" data-close="modal-login"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-username">Nom d'utilisateur</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" id="login-username" placeholder="Entrez votre identifiant" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Mot de passe</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="login-password" placeholder="Entrez votre mot de passe" required>
+                        </div>
+                    </div>
+                    <div id="login-error" class="alert alert-danger hidden"></div>
+                    <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: SETUP -->
+    <div id="modal-setup" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-user-plus"></i> Initialisation</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-intro-text">Aucun administrateur n'est configuré. Veuillez créer le compte d'administration initial.</p>
+                <form id="setup-form">
+                    <div class="form-group">
+                        <label for="setup-username">Nom d'utilisateur</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" id="setup-username" placeholder="Choisissez un identifiant" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="setup-password">Mot de passe</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="setup-password" placeholder="Minimum 6 caractères" required minlength="6">
+                        </div>
+                    </div>
+                    <div id="setup-error" class="alert alert-danger hidden"></div>
+                    <button type="submit" class="btn btn-success btn-block">Créer le compte admin</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: MONTHS RANGE SETTINGS -->
+    <div id="modal-settings" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-sliders"></i> Configuration du Calendrier</h2>
+                <button class="modal-close btn-icon" data-close="modal-settings"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="settings-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="settings-start-month">Mois de début</label>
+                            <input type="month" id="settings-start-month" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="settings-end-month">Mois de fin</label>
+                            <input type="month" id="settings-end-month" required>
+                        </div>
+                    </div>
+                    <div id="settings-error" class="alert alert-danger hidden"></div>
+                    <div id="settings-success" class="alert alert-success hidden">Configuration enregistrée !</div>
+                    <button type="submit" class="btn btn-primary btn-block">Sauvegarder</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- DAY STATUS POPOVER (Edit Mode) -->
+    <div id="day-status-popover" class="day-popover hidden">
+        <div class="popover-arrow"></div>
+        <div class="popover-header">
+            <span id="popover-date-label">Date</span>
+            <button id="btn-popover-close" class="btn-icon-xs"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="popover-options">
+            <button class="status-option-btn" data-status="available">
+                <span class="status-indicator color-available"></span> Disponible
+            </button>
+            <button class="status-option-btn" data-status="unavailable">
+                <span class="status-indicator color-unavailable"></span> Indisponible
+            </button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

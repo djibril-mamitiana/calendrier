@@ -1,0 +1,19 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Wrangler / Cloudflare local state
+.wrangler/
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Misc
+.DS_Store
+Thumbs.db
+*.log

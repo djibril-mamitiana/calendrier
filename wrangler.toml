@@ -1,0 +1,7 @@
+name = "mobile-home-calendar"
+pages_build_output_dir = "public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "calendrier_db"
+database_id = "b8d14b10-6bc1-4475-8ce6-e88df2775a40"

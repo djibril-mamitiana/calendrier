@@ -1,0 +1,18 @@
+{
+  "name": "mobile-home-calendar",
+  "version": "1.0.0",
+  "description": "Premium calendar manager for mobile home availability running on Cloudflare Pages and D1",
+  "main": "functions/api/[[route]].ts",
+  "scripts": {
+    "dev": "wrangler pages dev public --d1 DB --binding DB",
+    "db:init": "wrangler d1 execute calendrier_db --local --file=schema.sql"
+  },
+  "dependencies": {
+    "hono": "^4.6.14"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241112.0",
+    "typescript": "^5.6.3",
+    "wrangler": "^3.88.0"
+  }
+}
