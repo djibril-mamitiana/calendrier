@@ -1,4 +1,4 @@
-name = "mobile-home-calendar"
+name = "calendrier"
 pages_build_output_dir = "public"
 
 [[d1_databases]]
