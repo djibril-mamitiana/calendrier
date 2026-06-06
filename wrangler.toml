@@ -4,4 +4,4 @@ pages_build_output_dir = "public"
 [[d1_databases]]
 binding = "DB"
 database_name = "calendrier_db"
-database_id = "b8d14b10-6bc1-4475-8ce6-e88df2775a40"
+database_id = "98ed2053-7ed8-414a-90fd-1b192017d7e7"
